@@ -1,0 +1,11 @@
+{
+  "name": "node-lightarray-relay",
+  "description": "Remote relay for the LightArray controller",
+  "author": "Drew Harris <drewbharris@gmail.com>",
+  "dependencies": {
+    "express": "3.2.6",
+    "socket.io": "0.9.16",
+    "when": "2.1.0"
+  },
+  "engine": "node >= 0.8"
+}

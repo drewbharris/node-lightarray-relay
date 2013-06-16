@@ -1,0 +1,51 @@
+<html>
+  <head>    
+  	<style type="text/css">
+  		body {
+  			background-color: #000000;
+  		}
+  		.container {
+  			width: 100%;
+  			margin: 0 auto;
+  		}
+  		#one, #two, #three, #four {
+  			width: 25%;
+  			height: 400px;
+  			float: left;
+  		}
+  	</style>
+  </head>
+  <body>
+  	<div class="container">
+	  	<button id="on">on</button>
+	  	<button id="off">off</button><br/>
+	  	<div id="one"></div>
+	  	<div id="two"></div>
+	  	<div id="three"></div>
+	  	<div id="four"></div>
+  	</div>
+    <script src="/js/jquery-1.9.1.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript">
+    	var socket = io.connect('http://' + location.host);
+    	socket.on('data', function(data){
+    		$("#one").css('background-color', 'hsl(0, 0%, ' + Math.round((data.values[0]/127)*100) + '%)');
+    		$("#two").css('background-color', 'hsl(0, 0%, ' + Math.round((data.values[1]/127)*100) + '%)');
+    		$("#three").css('background-color', 'hsl(0, 0%, ' + Math.round((data.values[2]/127)*100) + '%)');
+    		$("#four").css('background-color', 'hsl(0, 0%, ' + Math.round((data.values[3]/127)*100) + '%)');
+    	});
+	    $(document).ready(function(){
+	    	$("#on").click(function(){
+	    		socket.emit('updateAll', {
+	    			'values': [127, 127, 127, 127]
+	    		});
+	    	});
+	    	$("#off").click(function(){
+	    		socket.emit('updateAll', {
+	    			'values': [0, 0, 0, 0]
+	    		});
+	    	});
+	    });
+    </script>
+  </body>
+</html>
