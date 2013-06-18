@@ -3,7 +3,7 @@ var express = require('express'),
     fs = require('fs'),
     server = require('http').createServer(app),
     io = require('socket.io').listen(server, {
-        'log': false
+        'log': true
     });
 
 var values = [0, 0, 0, 0],
@@ -22,7 +22,8 @@ app.get('/', function(req, res){
 var writeToClients = function(){
 	Object.keys(sockets).map(function(socket){
 		sockets[socket].emit('data', {
-			'values': values
+			'values': values,
+            'timestamp': new Date().getTime()
 		});
 	});
 };
@@ -30,13 +31,13 @@ var writeToClients = function(){
 io.sockets.on('connection', function (socket) {
     sockets[socket.id] = socket;
 
-    socket.on('update', function(data){
-    	values = data.values;
-        writeToClients(data.element, data.value);
-    });
+    // socket.on('update', function(data){
+    // 	values = data.values;
+    //     writeToClients(data.element, data.value);
+    // });
     socket.on('updateAll', function(data){
     	values = data.values;
-        writeToClients(data.values);
+        writeToClients();
     });
 
     socket.on('disconnect', function(){
