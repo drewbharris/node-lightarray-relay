@@ -8,11 +8,11 @@ Start with a 100ms buffer from Ableton Live (negative offset of 100ms for relay)
 
 Relay server sends a timestamp with each frame.
 
-ON WEBSOCKET FRAME MESSAGE:
+On WebSocket frame message:
 
-    Client compares local timestamp to the timestamp in the frame.
-    	delta = frame timestamp - local timestamp
-    Set a timeout to play the frame in (100ms - delta) ms.
+Client compares local timestamp to the timestamp in the frame.
+delta = frame timestamp - local timestamp
+Set a timeout to play the frame in (100ms - delta) ms.
 
 
 ### License
